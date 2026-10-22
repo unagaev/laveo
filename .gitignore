@@ -1,0 +1,22 @@
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+
+data/labels/
+data/patches/
+data/tiles/
+data/training&val_aoi
+data/arch/
+data/cache
+
+# Outputs
+outputs/predictions/
+outputs/postprocessing/
+outputs/final/
+
+# Models
+ml/models
+
+# Orchestration
+src/lavender/orchestration/
