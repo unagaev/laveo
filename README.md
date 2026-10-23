@@ -4,11 +4,11 @@ LAVEO is a geospatial AI project for mapping lavender fields from Sentinel-2 sat
 
 ## Workflow
 
-1. **Satellite imagery** — Sentinel-2 imagery acquired during the lavender flowering period.
-2. **Deep learning segmentation** — ResUNet predicts lavender areas from satellite image patches.
-3. **Raster-to-vector conversion** — Converts binary prediction rasters into polygons.
+1. **Satellite imagery** - Sentinel-2 imagery acquired during the lavender flowering period.
+2. **Deep learning segmentation** - ResUNet predicts lavender areas from satellite image patches.
+3. **Raster-to-vector conversion** - Converts binary prediction rasters into polygons.
 4. **Area filtering** — Removes polygons smaller than 5,000 m² (0.5 ha).
-5. **Geometry simplification** — Simplifies polygon boundaries while preserving topology.
+5. **Geometry simplification** - Simplifies polygon boundaries while preserving topology.
 
 ## Study Area
 
@@ -25,7 +25,18 @@ Dobrich Province, Bulgaria
 
 ## Outputs
 
-The project produces georeferenced raster predictions and vector polygon datasets representing detected lavender fields.
+The project produces georeferenced raster predictions and vector polygon datasets representing detected lavender fields in Dobrich Province, Bulgaria.
+
+## Results
+
+### Lavender field mapping — Dobrich, Bulgaria (2025)
+
+![LAVEO lavender field predictions over Sentinel-2 imagery](docs/images/vis.JPG)
+
+Predicted lavender field boundaries generated using a ResUNet
+model and Sentinel-2 imagery
+
+## Limitations
 
 ## Status
 
