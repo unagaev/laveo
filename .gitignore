@@ -11,10 +11,8 @@ __pycache__/
 
 # Data
 
-data/labels/
 data/patches/
 data/tiles/
-data/training&val_aoi
 data/arch/
 data/cache
 data/outputs/predictions/
@@ -25,5 +23,3 @@ ml/models
 
 # Temporary files
 .tmp_dagster_home_*/
-
-

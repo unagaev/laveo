@@ -2,6 +2,7 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 import glob
 import time
+from pathlib import Path
 from tqdm import tqdm
 
 import torch
@@ -37,8 +38,10 @@ INPUT_DIR = (
 )
 
 OUTPUT_DIR = (
-    "data/outputs/predictions"
+    Path("data/outputs/predictions")
 )
+
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 PATCH_SIZE = STRIDE = 96
 
@@ -470,15 +473,6 @@ def predict_single_tile(
         np.uint8
     )
 
-    # ========================================================
-    # SAVE PREDICTION
-    # ========================================================
-
-    os.makedirs(
-        OUTPUT_DIR,
-        exist_ok=True
-    )
-
     # --------------------------------------------------------
     # Remove nodata from metadata
     # --------------------------------------------------------
@@ -535,7 +529,9 @@ def main():
     # --------------------------------------------------------
     # Device
     # --------------------------------------------------------
-
+    
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    
     device = torch.device(
         "cuda"
         if torch.cuda.is_available()
@@ -553,7 +549,8 @@ def main():
             f"[INFO] GPU: "
             f"{torch.cuda.get_device_name(0)}"
         )
-
+    
+    
     # --------------------------------------------------------
     # Load model
     # --------------------------------------------------------
@@ -607,10 +604,8 @@ def main():
             os.path.basename(tile_path)
         )[0]
 
-        out_path = os.path.join(
-            OUTPUT_DIR,
-            f"{name}_prediction.tif"
-        )
+        out_path = OUTPUT_DIR / f"{name}_prediction.tif"
+        
 
         predict_single_tile(
             model,

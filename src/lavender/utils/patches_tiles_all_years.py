@@ -310,14 +310,29 @@ def sample_patches(
         f"Mask:\n{mask_path}"
     )
 
-    with rasterio.open(image_path) as src_img, \
-         rasterio.open(mask_path) as src_mask:
-
+    with rasterio.open(image_path) as src_img, rasterio.open(mask_path) as src_mask:
+        
         width = src_img.width
         height = src_img.height
 
         crs = src_img.crs
         transform = src_img.transform
+        
+        if width != src_mask.width or height != src_mask.height:
+            raise ValueError("Image and mask dimensions do not match.")
+
+        if crs != src_mask.crs:
+            raise ValueError("Image and mask CRS do not match.")
+
+        if not transform.almost_equals(src_mask.transform):
+            raise ValueError("Image and mask transforms do not match.")
+
+        if width < PATCH_SIZE or height < PATCH_SIZE:
+            raise ValueError(
+                f"Raster too small for {PATCH_SIZE}x{PATCH_SIZE} patches: "
+                f"{width}x{height}"
+            )
+        
 
         print(
             f"\nImage size: "
@@ -793,25 +808,14 @@ def main():
 
     check_inputs()
 
-    # --------------------------------------------------------
-    # Remove old patches
-    # --------------------------------------------------------
-
-    if OUT_DIR.exists():
-
-        print(
-            f"\nRemoving existing patches:\n"
-            f"{OUT_DIR}"
-        )
-
-        shutil.rmtree(
-            OUT_DIR
-        )
-
     OUT_DIR.mkdir(
         parents=True,
         exist_ok=True
     )
+    
+    for split in ["train", "val", "test"]:
+        (OUT_DIR / split / "images").mkdir(parents=True, exist_ok=True)
+        (OUT_DIR / split / "masks").mkdir(parents=True, exist_ok=True)
 
     # ========================================================
     # TRAINING AREA
@@ -972,7 +976,7 @@ def main():
 
     print(
         """
-data/patches_multiyear/
+data/patches/
 
     train/
         images/
