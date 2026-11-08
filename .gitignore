@@ -26,9 +26,6 @@ outputs/final/
 # Models
 ml/models
 
-# Orchestration
-src/lavender/orchestration/
-
 # Temporary files
 .tmp_dagster_home_*/
 

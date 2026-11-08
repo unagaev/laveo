@@ -1,0 +1,130 @@
+{
+  "run_utc": "2026-11-08T21:03:49.926963+00:00",
+  "input_dir": "C:\\Users\\rost8\\OneDrive\\Desktop\\LAVIS\\data\\outputs\\predictions",
+  "output_dir": "C:\\Users\\rost8\\OneDrive\\Desktop\\LAVIS\\data\\outputs\\postprocessing",
+  "years_processed": [
+    2021,
+    2023,
+    2025
+  ],
+  "settings": {
+    "expected_resolution_m": 10.0,
+    "min_area_m2": 5000.0,
+    "min_estimated_width_m": 10.0,
+    "simplify_tolerance_m": 2.0,
+    "max_concavity_area_m2": 200.0,
+    "max_concavity_width_m": 10.0,
+    "max_concavity_area_fraction": 0.02,
+    "connectivity": 4,
+    "lavender_value": 1,
+    "write_geojson": false
+  },
+  "notes": [
+    "Raster resolution is checked/reported; raster geotransform is authoritative.",
+    "Minimum width is a global minimum-rotated-rectangle proxy, not local minimum width.",
+    "Concavity repair fills only small components of convex-hull gaps meeting configured limits.",
+    "This is geometric QA, not an accuracy assessment against reference labels.",
+    "GeoPackage geometries are saved in each input raster's CRS."
+  ],
+  "runs": [
+    {
+      "year": 2021,
+      "input": "C:\\Users\\rost8\\OneDrive\\Desktop\\LAVIS\\data\\outputs\\predictions\\Dobrich_2021-07-01_2021-07-03_Dobrich_Province_Boundaries_prediction.tif",
+      "source_crs": "PROJCS[\"WGS 84 / UTM zone 35N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",27],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32635\"]]",
+      "metric_crs": "PROJCS[\"WGS 84 / UTM zone 35N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",27],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32635\"]]",
+      "raster": {
+        "raster_width": 11121,
+        "raster_height": 7745,
+        "crs": "EPSG:32635",
+        "pixel_size_x": 10.0,
+        "pixel_size_y": 10.0,
+        "lavender_pixels": 1010227
+      },
+      "settings": {
+        "expected_resolution_m": 10.0,
+        "min_area_m2": 5000.0,
+        "min_estimated_width_m": 10.0,
+        "simplify_tolerance_m": 2.0,
+        "max_concavity_area_m2": 200.0,
+        "max_concavity_width_m": 10.0,
+        "max_concavity_area_fraction": 0.02,
+        "connectivity": 4,
+        "lavender_value": 1,
+        "write_geojson": false
+      },
+      "counts": {
+        "raw": 4345,
+        "area_filtered": 2712,
+        "width_filtered": 2712,
+        "concavity_repaired": 2712,
+        "final": 2712
+      }
+    },
+    {
+      "year": 2023,
+      "input": "C:\\Users\\rost8\\OneDrive\\Desktop\\LAVIS\\data\\outputs\\predictions\\Dobrich_2023-07-01_2023-07-03_Dobrich_Province_Boundaries_prediction.tif",
+      "source_crs": "PROJCS[\"WGS 84 / UTM zone 35N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",27],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32635\"]]",
+      "metric_crs": "PROJCS[\"WGS 84 / UTM zone 35N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",27],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32635\"]]",
+      "raster": {
+        "raster_width": 11121,
+        "raster_height": 7745,
+        "crs": "EPSG:32635",
+        "pixel_size_x": 10.0,
+        "pixel_size_y": 10.0,
+        "lavender_pixels": 504687
+      },
+      "settings": {
+        "expected_resolution_m": 10.0,
+        "min_area_m2": 5000.0,
+        "min_estimated_width_m": 10.0,
+        "simplify_tolerance_m": 2.0,
+        "max_concavity_area_m2": 200.0,
+        "max_concavity_width_m": 10.0,
+        "max_concavity_area_fraction": 0.02,
+        "connectivity": 4,
+        "lavender_value": 1,
+        "write_geojson": false
+      },
+      "counts": {
+        "raw": 2985,
+        "area_filtered": 1426,
+        "width_filtered": 1426,
+        "concavity_repaired": 1426,
+        "final": 1426
+      }
+    },
+    {
+      "year": 2025,
+      "input": "C:\\Users\\rost8\\OneDrive\\Desktop\\LAVIS\\data\\outputs\\predictions\\Dobrich_2025-07-01_2025-07-03_Dobrich_Province_Boundaries_prediction.tif",
+      "source_crs": "PROJCS[\"WGS 84 / UTM zone 35N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",27],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32635\"]]",
+      "metric_crs": "PROJCS[\"WGS 84 / UTM zone 35N\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",27],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"32635\"]]",
+      "raster": {
+        "raster_width": 11121,
+        "raster_height": 7745,
+        "crs": "EPSG:32635",
+        "pixel_size_x": 10.0,
+        "pixel_size_y": 10.0,
+        "lavender_pixels": 486061
+      },
+      "settings": {
+        "expected_resolution_m": 10.0,
+        "min_area_m2": 5000.0,
+        "min_estimated_width_m": 10.0,
+        "simplify_tolerance_m": 2.0,
+        "max_concavity_area_m2": 200.0,
+        "max_concavity_width_m": 10.0,
+        "max_concavity_area_fraction": 0.02,
+        "connectivity": 4,
+        "lavender_value": 1,
+        "write_geojson": false
+      },
+      "counts": {
+        "raw": 3053,
+        "area_filtered": 1335,
+        "width_filtered": 1335,
+        "concavity_repaired": 1335,
+        "final": 1335
+      }
+    }
+  ]
+}

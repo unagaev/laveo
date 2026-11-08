@@ -1,0 +1,16 @@
+year,stage,feature_count,total_area_ha,median_area_ha,invalid_geometries,empty_geometries
+2021,raw,4345,10102.27,1.26,0,0
+2021,area_filtered,2712,9937.39,2.47,0,0
+2021,width_filtered,2712,9937.39,2.47,0,0
+2021,concavity_repaired,2712,10123.18,2.545,0,0
+2021,final,2712,10121.715,2.545,0,0
+2023,raw,2985,5046.87,0.4,0,0
+2023,area_filtered,1426,4894.22,2.31,0,0
+2023,width_filtered,1426,4894.22,2.31,0,0
+2023,concavity_repaired,1426,4991.13,2.385,0,0
+2023,final,1426,4990.185,2.3825,0,0
+2025,raw,3053,4860.61,0.3,0,0
+2025,area_filtered,1335,4676.1,2.07,0,0
+2025,width_filtered,1335,4676.1,2.07,0,0
+2025,concavity_repaired,1335,4765.795,2.16,0,0
+2025,final,1335,4764.945,2.16,0,0

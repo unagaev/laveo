@@ -38,3 +38,6 @@ The project produces georeferenced raster predictions and vector polygon dataset
 
 Research and development. The workflow is being evaluated for cross-region transferability and the quality of mapped field boundaries.
 
+## Running visualisation:
+
+Go to the project's root and run in the terminal: streamlit run frontend/app.py
