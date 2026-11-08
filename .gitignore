@@ -1,5 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+
 # Jupyter
 .ipynb_checkpoints/
+
+# Local environments
+.env
+.venv/
 
 # Data
 
@@ -9,9 +17,9 @@ data/tiles/
 data/training&val_aoi
 data/arch/
 data/cache
+data/outputs/predictions/
 
 # Outputs
-outputs/predictions/
 outputs/postprocessing/
 outputs/final/
 
@@ -20,3 +28,8 @@ ml/models
 
 # Orchestration
 src/lavender/orchestration/
+
+# Temporary files
+.tmp_dagster_home_*/
+
+

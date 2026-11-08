@@ -1,6 +1,7 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 import glob
+import time
 from tqdm import tqdm
 
 import torch
@@ -9,6 +10,7 @@ import numpy as np
 import geopandas as gpd
 
 
+start = time.time()
 
 from ..models.resunet import ResUNet
 from ..eval.metrics import (
@@ -29,26 +31,16 @@ MODEL_PATH = (
     "ml/models/resunet_lavender_best.pth"
 )
 
-AOI_PATH = (
-    "data/aoi/Dobrich_Province_Boundaries.geojson"
-)
-
 INPUT_DIR = (
     #"data/tiles/images/predicted"
     "data/tiles/predictions/images"
 )
 
 OUTPUT_DIR = (
-    "data/output/predictions"
+    "data/outputs/predictions"
 )
 
-MASK_DIR = (
-    "cache/val/masks"
-)
-
-PATCH_SIZE = 96
-
-STRIDE = 96
+PATCH_SIZE = STRIDE = 96
 
 IN_CHANNELS = 12
 
@@ -57,16 +49,6 @@ BASE_FILTERS = 32
 OUT_CHANNELS = 1
 
 THRESHOLD = 0.5
-
-
-# ============================================================
-# LOAD AOI
-# ============================================================
-
-aoi = gpd.read_file(
-    AOI_PATH
-)
-
 
 # ============================================================
 # MODEL
@@ -489,102 +471,6 @@ def predict_single_tile(
     )
 
     # ========================================================
-    # VALIDATION MASK
-    # ========================================================
-
-    mask_path = os.path.join(
-        MASK_DIR,
-        os.path.basename(path)
-    )
-
-    metrics = None
-
-    if os.path.exists(
-        mask_path
-    ):
-
-        print(
-            f"[INFO] Ground truth found:"
-        )
-
-        print(
-            f"       {mask_path}"
-        )
-
-        with rasterio.open(
-            mask_path
-        ) as src:
-
-            gt = src.read(
-                1
-            ).astype(
-                np.uint8
-            )
-
-        # ----------------------------------------------------
-        # Check shape
-        # ----------------------------------------------------
-
-        if gt.shape != binary.shape:
-
-            print(
-                "[WARNING] Ground-truth "
-                "shape does not match "
-                "prediction."
-            )
-
-            print(
-                f"GT:   {gt.shape}"
-            )
-
-            print(
-                f"Pred: {binary.shape}"
-            )
-
-        else:
-
-            dice_val = dice(
-                binary,
-                gt
-            )
-
-            iou_val = iou(
-                binary,
-                gt
-            )
-
-            precision_val = precision(
-                binary,
-                gt
-            )
-
-            recall_val = recall(
-                binary,
-                gt
-            )
-
-            accuracy_val = accuracy(
-                binary,
-                gt
-            )
-
-            metrics = (
-                dice_val,
-                iou_val,
-                precision_val,
-                recall_val,
-                accuracy_val
-            )
-
-            print(
-                f"Dice={dice_val:.4f}  "
-                f"IoU={iou_val:.4f}  "
-                f"Precision={precision_val:.4f}  "
-                f"Recall={recall_val:.4f}  "
-                f"Accuracy={accuracy_val:.4f}"
-            )
-
-    # ========================================================
     # SAVE PREDICTION
     # ========================================================
 
@@ -637,7 +523,7 @@ def predict_single_tile(
         f"{out_path}"
     )
 
-    return metrics
+    return None
 
 
 # ============================================================
@@ -705,16 +591,6 @@ def main():
     # Metrics
     # --------------------------------------------------------
 
-    all_dice = []
-
-    all_iou = []
-
-    all_precision = []
-
-    all_recall = []
-
-    all_accuracy = []
-
     # ========================================================
     # PROCESS TILES
     # ========================================================
@@ -736,103 +612,12 @@ def main():
             f"{name}_prediction.tif"
         )
 
-        metrics = predict_single_tile(
+        predict_single_tile(
             model,
             device,
             tile_path,
             out_path
         )
-
-        if metrics is not None:
-
-            (
-                dice_v,
-                iou_v,
-                prec_v,
-                rec_v,
-                acc_v
-            ) = metrics
-
-            all_dice.append(
-                dice_v
-            )
-
-            all_iou.append(
-                iou_v
-            )
-
-            all_precision.append(
-                prec_v
-            )
-
-            all_recall.append(
-                rec_v
-            )
-
-            all_accuracy.append(
-                acc_v
-            )
-
-    # ========================================================
-    # OVERALL RESULTS
-    # ========================================================
-
-    if all_dice:
-
-        print(
-            "\n"
-            + "=" * 70
-        )
-
-        print(
-            "OVERALL RESULTS"
-        )
-
-        print(
-            "=" * 70
-        )
-
-        print(
-            f"Tiles evaluated: "
-            f"{len(all_dice)}"
-        )
-
-        print(
-            f"Dice      : "
-            f"{np.mean(all_dice):.4f}"
-        )
-
-        print(
-            f"IoU       : "
-            f"{np.mean(all_iou):.4f}"
-        )
-
-        print(
-            f"Precision : "
-            f"{np.mean(all_precision):.4f}"
-        )
-
-        print(
-            f"Recall    : "
-            f"{np.mean(all_recall):.4f}"
-        )
-
-        print(
-            f"Accuracy  : "
-            f"{np.mean(all_accuracy):.4f}"
-        )
-
-    else:
-
-        print(
-            "\n[INFO] No ground-truth "
-            "masks were found."
-        )
-
-    print(
-        "\nDONE"
-    )
-
 
 # ============================================================
 # ENTRY POINT
@@ -840,3 +625,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    end = time.time()
+    print(f'Process took {(end-start):.1f} seconds')

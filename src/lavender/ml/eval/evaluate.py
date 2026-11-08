@@ -1,22 +1,42 @@
+import glob
+import os
+
 import torch
 from torch.utils.data import DataLoader
-from ml.dataset.dataset import VineyardDataset
-from ml.models.unet import UNet
-from ml.eval.metrics import iou, dice
+from lavender.ml.dataset.dataset import LavenderDataset
+from lavender.ml.models.resunet import ResUNet
+from lavender.ml.eval.metrics import iou, dice
+
+
+img_paths = sorted(glob.glob("data/cache/val/images/*.npy"))
+mask_paths = sorted(glob.glob("data/cache/val/masks/*.npy"))
+
+assert len(img_paths) == len(mask_paths), "Image/mask count mismatch"
+
+assert len(img_paths) > 0, "No validation images found"
+
+for img, mask in zip(img_paths, mask_paths):
+    assert os.path.basename(img) == os.path.basename(mask), \
+        f"Image/mask mismatch: {img}, {mask}"
 
 def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    model = UNet(in_channels=12).to(device)
-    model.load_state_dict(torch.load("best_model.pth", map_location=device))
+    model = ResUNet(in_channels=12).to(device)
+    checkpoint = torch.load(
+        "ml/models/resunet_lavender_best.pth",
+        map_location=device,
+        weights_only=False
+    )
+
+    model.load_state_dict(checkpoint["model_state_dict"])
     model.eval()
 
-    ds = VineyardDataset(
-        "data/cache/val/images",
-        "data/cache/val/masks",
-        mode="val",
-        augment=False
+    ds = LavenderDataset(
+        img_paths,
+        mask_paths,
+        mode="val"
     )
 
     loader = DataLoader(ds, batch_size=4, shuffle=False)

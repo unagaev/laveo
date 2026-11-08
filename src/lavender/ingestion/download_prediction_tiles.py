@@ -1,4 +1,5 @@
 from pathlib import Path
+import time
 import tomllib
 import geopandas as gpd
 import odc.geo.xr
@@ -7,6 +8,7 @@ import rioxarray  # noqa: F401
 from odc.geo.geom import Geometry
 from pystac_client import Client
 from shapely.geometry import mapping
+
 
 
 # ============================================================
@@ -356,5 +358,7 @@ def download(aoi, date_range):
     print("=" * 70)
     
 if __name__ == '__main__':
+    start = time.perf_counter()
     for i in date_ranges:
         download(aoi_path, i)
+    print('Total time: ', time.perf_counter() - start)

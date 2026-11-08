@@ -31,6 +31,9 @@ The project produces georeferenced raster predictions and vector polygon dataset
 
 ## Limitations
 
+1. Currently it predicts on a single-date image that requires more efficient cloud masking or mosaicking non-cloudy images/vis
+2. 
+
 ## Status
 
 Research and development. The workflow is being evaluated for cross-region transferability and the quality of mapped field boundaries.

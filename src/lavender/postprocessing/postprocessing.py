@@ -35,8 +35,8 @@ from shapely.ops import unary_union
 # ---------------------------------------------------------------------------
 
 PROJECT_ROOT = Path.cwd()
-INPUT_DIR = PROJECT_ROOT / "outputs" / "predictions"
-OUTPUT_ROOT = PROJECT_ROOT / "outputs" / "postprocessing"
+INPUT_DIR = PROJECT_ROOT /"data" / "outputs" / "predictions"
+OUTPUT_ROOT = PROJECT_ROOT /"data" / "outputs" / "postprocessing"
 
 YEARS = (2021, 2023, 2025)
 
