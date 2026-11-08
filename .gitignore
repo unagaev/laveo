@@ -18,10 +18,7 @@ data/training&val_aoi
 data/arch/
 data/cache
 data/outputs/predictions/
-
-# Outputs
-outputs/postprocessing/
-outputs/final/
+data/outputs/final/
 
 # Models
 ml/models

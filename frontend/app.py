@@ -28,9 +28,9 @@ ROOT = Path(__file__).resolve().parents[1]
 RASTER_PATH = ROOT / "data" / "tiles" / "predictions" / "images" / "Dobrich_2021-07-01_2021-07-03_Dobrich_Province_Boundaries.tif"
 
 VECTOR_PATHS = {
-    2021: ROOT / "outputs" / "postprocessing" / "2021" / "final_fields.gpkg",
-    2023: ROOT / "outputs" / "postprocessing" / "2023" / "final_fields.gpkg",
-    2025: ROOT / "outputs" / "postprocessing" / "2025" / "final_fields.gpkg",
+    2021: ROOT / "data" / "outputs" / "postprocessing" / "2021" / "final_fields.gpkg",
+    2023: ROOT / "data" / "outputs" / "postprocessing" / "2023" / "final_fields.gpkg",
+    2025: ROOT / "data" / "outputs" / "postprocessing" / "2025" / "final_fields.gpkg",
 }
 
 APP_NAME = "LAVEO"
