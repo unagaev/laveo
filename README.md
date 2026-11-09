@@ -223,8 +223,9 @@ Generated data, model checkpoints and intermediate files are excluded from GitHu
 ## 8. Limitations
 
 1. Current predictions use single-date satellite imagery. More effective cloud masking or mosaicking of cloud-free imagery could improve prediction quality.
-2. Prediction quality depends on satellite image conditions, spatial resolution and the quality of training labels.
-3. Cross-region transferability and the quality of mapped field boundaries require further evaluation.
+2. Prediction quality depends on satellite image conditions, spatial resolution and the quality of training labels. The predicting model accuracy can be further improved. 
+3. Currently it covers only one region in Bulgaria. Cross-region transferability in the domestic country or in international regions, and the quality of mapped field boundaries require further evaluation.
+4. The predicted fields are expected to be further filtered and smoothed
 
 ## 9. Project status
 
