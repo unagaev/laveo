@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Bulgaria_Dobrich_Test_AOI",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "fid": 2 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 27.672860760608593, 43.757993536292943 ], [ 27.672860760608593, 43.877310387063311 ], [ 27.850177330354825, 43.877310387063311 ], [ 27.850177330354825, 43.757993536292943 ], [ 27.672860760608593, 43.757993536292943 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Bg_Training_AOI_Dobrich_2021",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "fid": 2 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 27.945555172318794, 43.532309635861075 ], [ 27.945555172318794, 43.755951678296775 ], [ 28.254037292514962, 43.755951678296775 ], [ 28.254037292514962, 43.532309635861075 ], [ 27.945555172318794, 43.532309635861075 ] ] ] } }
+]
+}
