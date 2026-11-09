@@ -10,11 +10,11 @@ The project uses a ResUNet semantic segmentation model to identify lavender fiel
 
 The processing workflow consists of six main stages:
 
-1. **Satellite imagery acquisition** – Downloads Sentinel-2 imagery for the training and prediction areas.
+1. **Satellite imagery acquisition** – Downloads Sentinel-2 imagery for the training, test and prediction areas.
 2. **Data preparation** – Prepares imagery, labels and spatial patches for model development and inference.
 3. **Input preparation** – Organises image tiles and input data for the machine learning workflow.
 4. **Deep learning segmentation** – Trains and evaluates a ResUNet model using labelled lavender field data.
-5. **Full-tile inference** – Applies the trained model to satellite imagery to generate lavender probability or binary prediction rasters.
+5. **Full-tile inference** – Applies the trained model to satellite imagery to generate lavender prediction rasters.
 6. **Geospatial post-processing** – Converts raster predictions into polygons, removes small polygons and simplifies boundaries while preserving topology.
 
 The workflow is orchestrated using Dagster.
@@ -55,9 +55,10 @@ Satellite imagery and intermediate processing products are generated during pipe
 - Python 3.11
 - PyTorch
 - NumPy and Pandas
-- Rasterio and Rasterio-based geospatial processing
+- Rasterio
 - GeoPandas
 - Shapely
+- PySTAC and ODC-STAC
 - Xarray and Rioxarray
 - Dagster
 - Streamlit
@@ -76,11 +77,9 @@ Satellite imagery and intermediate processing products are generated during pipe
 ### Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd LAVIS
+git clone https://github.com/unagaev/laveo.git
+cd laveo
 ```
-
-Replace `YOUR_GITHUB_REPOSITORY_URL` with the actual repository URL.
 
 ### Create the Conda environment
 
@@ -91,16 +90,24 @@ conda env create -f environment.yml
 Activate the environment:
 
 ```bash
-conda activate lavis
+conda activate laveo
 ```
 
-Verify the main dependencies:
+### Install the project as a package
+
+```bash
+pip install -e .
+```
+
+Editable installation registers the `lavender` package in the active Python environment, allowing project modules to be imported without manually configuring PYTHONPATH.
+
+### Verify the installation
 
 ```bash
 python --version
 dagster --version
 streamlit --version
-python -c "import torch, rasterio, geopandas; print('Dependencies OK')"
+python -c "import torch, rasterio, geopandas, lavender; print('Dependencies OK')"
 ```
 
 ## 5. Running the project
@@ -112,14 +119,27 @@ There are three ways to interact with the project.
 Individual Python scripts can be executed directly from the project root.
 
 This approach is useful for:
+
 - Development and debugging.
 - Testing individual processing stages.
 - Inspecting intermediate outputs.
 - Re-running selected processing steps.
 
-Use the relevant Python scripts in `src/lavender/` and their corresponding configurations.
+The main processing scripts are located in `src/lavender/`:
 
-The required input data and output directories must be available before running each script.
+| Step | Script | Purpose |
+|---|---|---|
+| 1 | `ingestion/download_training_test_tiles.py` | Downloads training and test imagery |
+| 2 | `ingestion/download_prediction_tiles.py` | Downloads prediction imagery |
+| 3 | `utils/rasterise_tile.py` | Rasterises field boundaries |
+| 4 | `utils/patches_tiles_all_years.py` | Generates spatial patches |
+| 5 | `utils/convert_patches_to_npy_multiyear.py` | Converts patches to NumPy arrays |
+| 6 | `ml/training/train.py` | Trains the ResUNet model |
+| 7 | `ml/eval/evaluate.py` | Evaluates model performance |
+| 8 | `ml/inference/predict_tile.py` | Generates full-tile predictions |
+| 9 | `postprocessing/postprocessing.py` | Extracts and processes field polygons |
+
+The scripts should be executed in the appropriate processing order. Required input data, configurations and output directories must be available before running each script.
 
 ### Option B: Run the complete workflow using Dagster (recommended)
 
@@ -148,7 +168,7 @@ The project defines assets for:
 
 In the Dagster interface, inspect the asset graph and materialise the required assets.
 
-**Note:** Running Dagster definitions validation only checks that the workflow definitions can be loaded. It does not execute the complete processing pipeline.
+**Note:** Loading and validating Dagster definitions only checks that the workflow definitions can be loaded. It does not execute the complete processing pipeline.
 
 ### Option C: Run the Streamlit visualisation
 
@@ -171,19 +191,17 @@ The visualisation requires the relevant prediction and geospatial output files t
 ## 6. Project structure
 
 ```text
-LAVIS/
+LAVEO/
 ├── data/
 │   ├── labels/
 │   └── training&val_aoi/
 │
 ├── docs/
-│   └── images/
+│   ├── images/
+│   └── vis.png
 │
 ├── frontend/
 │   └── app.py
-│
-├── ml/
-│   └── models/
 │
 ├── orchestration/
 │   ├── __init__.py
@@ -191,6 +209,7 @@ LAVIS/
 │
 ├── src/
 │   └── lavender/
+│       ├── __init__.py
 │       ├── ingestion/
 │       ├── ml/
 │       │   ├── dataset/
@@ -201,9 +220,11 @@ LAVIS/
 │       ├── postprocessing/
 │       └── utils/
 │
-├── environment.yml
 ├── .gitignore
+├── config.toml
+├── environment.yml
 ├── LICENSE
+├── pyproject.toml
 └── README.md
 ```
 
@@ -222,10 +243,13 @@ Generated data, model checkpoints and intermediate files are excluded from GitHu
 
 ## 8. Limitations
 
-1. Current predictions use single-date satellite imagery. More effective cloud masking or mosaicking of cloud-free imagery could improve prediction quality.
-2. Prediction quality depends on satellite image conditions, spatial resolution and the quality of training labels. The predicting model accuracy can be further improved. 
-3. Currently it covers only one region in Bulgaria. Cross-region transferability in the domestic country or in international regions, and the quality of mapped field boundaries require further evaluation.
-4. The predicted fields are expected to be further filtered and smoothed
+1. **Single-date imagery:** Current predictions use predefined single-date Sentinel-2 imagery. Improved cloud masking and multi-date compositing could help reduce the impact of cloud cover and variable image conditions.
+
+2. **Prediction accuracy:** Model performance depends on image quality, spatial resolution and the accuracy and representativeness of training labels. Further model development and validation are needed to improve prediction reliability.
+
+3. **Geographical transferability:** The current implementation focuses on Dobrich Province, Bulgaria. Its ability to generalise to other regions and countries requires further evaluation.
+
+4. **Boundary delineation:** Predicted field boundaries may contain geometric inaccuracies, fragmented polygons or irregular edges. Further post-processing and comparison against reference boundaries would help assess and improve their quality.
 
 ## 9. Project status
 
