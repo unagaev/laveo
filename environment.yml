@@ -5,6 +5,11 @@ dependencies:
   - python=3.11
   - numpy
   - pandas
+  - odc-stac
+  - odc-geo
+  - dask
+  - pystac
+  - pystac-client
   - xarray
   - rioxarray
   - rasterio
